@@ -1,0 +1,36 @@
+2016-03-21 14:57:49 [20798] [INFO] Starting gunicorn 19.0.0
+2016-03-21 14:57:49 [20798] [INFO] Listening at: http://0.0.0.0:8000 (20798)
+2016-03-21 14:57:49 [20798] [INFO] Using worker: sync
+2016-03-21 14:57:49 [20803] [INFO] Booting worker with pid: 20803
+2016-03-21 14:57:49 [20803] [ERROR] Exception in worker process:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/gunicorn/arbiter.py", line 502, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/workers/base.py", line 114, in init_process
+    self.wsgi = self.app.wsgi()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/wsgiapp.py", line 65, in load
+    return self.load_wsgiapp()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/wsgiapp.py", line 52, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/lib/python2.7/dist-packages/gunicorn/util.py", line 365, in import_app
+    __import__(module)
+ImportError: No module named wsgi
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/gunicorn/arbiter.py", line 502, in spawn_worker
+    worker.init_process()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/workers/base.py", line 114, in init_process
+    self.wsgi = self.app.wsgi()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/wsgiapp.py", line 65, in load
+    return self.load_wsgiapp()
+  File "/usr/lib/python2.7/dist-packages/gunicorn/app/wsgiapp.py", line 52, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/lib/python2.7/dist-packages/gunicorn/util.py", line 365, in import_app
+    __import__(module)
+ImportError: No module named wsgi
+2016-03-21 14:57:49 [20803] [INFO] Worker exiting (pid: 20803)
+2016-03-21 14:57:50 [20798] [INFO] Shutting down: Master
+2016-03-21 14:57:50 [20798] [INFO] Reason: Worker failed to boot.
