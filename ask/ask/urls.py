@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^', include('urls')),
+    url(r'^', include('qa.urls')),
     #url(r'^question/(?P<id>\d+)/$', 'ask.views.test'),
     url(r'^admin/', admin.site.urls),
 ]
