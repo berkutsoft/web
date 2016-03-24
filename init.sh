@@ -9,3 +9,5 @@ sudo ln -s ~/web/etc/gunicorn.config   /etc/gunicorn.d/ask
 #gunicorn -b 0.0.0.0:8080 -D django:app
 cd ~/web/ask
 gunicorn -D -b 0.0.0.0:8000 ask.wsgi
+sudo /etc/init.d/mysql start
+mysql -uroot -e "create database django"
