@@ -11,3 +11,4 @@ cd ~/web/ask
 gunicorn -D -b 0.0.0.0:8000 ask.wsgi
 sudo /etc/init.d/mysql start
 mysql -uroot -e "create database django"
+python manage.py syncdb
