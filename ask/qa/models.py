@@ -13,7 +13,7 @@ class Question (models.Model):
 
 class Answer (models.Model):
     class Meta:
-        db_table = 'question'
+        db_table = 'answer'
     question = models.IntegerField()
     text = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
