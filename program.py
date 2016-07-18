@@ -25,19 +25,16 @@ class Order(Base):
 def mark_random_orders_accepted(orders):
     count = orders.query(Order).count()
     rnd = random.randrange(0,count)
-    print rnd
     for i, order in enumerate(orders.query(Order).yield_per(100)):
-        if rnd==0:break
+        if rnd==0:break # если мы уже поменяли необходимое количество записей то выходим из цикла
 
         order.state = 1
-        if not i % 1000:
-            print i
+        if not i % 1000: #коммит каждые 1000 записей
             orders.commit()
-            #orders.close()
-        #print "id", i, "name", order.name
+
         rnd-=1
-    print rnd
     orders.commit()
+    return session.query(Order).filter(Order.state == 1).count()
 
 db_engine = create_engine('mysql+mysqldb://root:1011@localhost/DB', echo=False)
 
@@ -48,9 +45,10 @@ session = Session()
 
 #findHold = session.query(Order).filter(Order.state == 0).yield_per(100)
 findHold = session.query(Order).yield_per(100)
+
 mark_random_orders_accepted(session)
-#for result in findHold:
-#    print result
+print session.query(Order).filter(Order.state == 1).count()
+
 
 try:
     session.commit()
