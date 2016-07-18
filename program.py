@@ -26,32 +26,21 @@ def mark_random_orders_accepted(orders):
     count = orders.query(Order).count()
     rnd = random.randrange(0,count)
     for i, order in enumerate(orders.query(Order).yield_per(100)):
-        if rnd==0:break # если мы уже поменяли необходимое количество записей то выходим из цикла
-
         order.state = 1
         if not i % 1000: #коммит каждые 1000 записей
             orders.commit()
-
+        if rnd==0:break # если мы уже поменяли необходимое количество записей то выходим из цикла
         rnd-=1
     orders.commit()
     return session.query(Order).filter(Order.state == 1).count()
 
 db_engine = create_engine('mysql+mysqldb://root:1011@localhost/DB', echo=False)
-
 Base.metadata.create_all(db_engine)
 Session = sessionmaker(bind=db_engine)
 session = Session()
 
+# Ищем все заказы со статусом hold = 0
+findHold = session.query(Order).filter(Order.state == 0).yield_per(100)
 
-#findHold = session.query(Order).filter(Order.state == 0).yield_per(100)
-findHold = session.query(Order).yield_per(100)
-
+# функция установки рандомного количества записей в accepted 
 mark_random_orders_accepted(session)
-print session.query(Order).filter(Order.state == 1).count()
-
-
-try:
-    session.commit()
-except exc.SQLAlchemyError, e:
-    session.rollback()
-
