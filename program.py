@@ -34,7 +34,7 @@ def mark_random_orders_accepted(orders):
     orders.commit()
     return session.query(Order).filter(Order.state == 1).count()
 
-db_engine = create_engine('mysql+mysqldb://root:1011@localhost/DB', echo=False)
+db_engine = create_engine('mysql+mysqldb://root:pass@localhost/DB', echo=False)
 Base.metadata.create_all(db_engine)
 Session = sessionmaker(bind=db_engine)
 session = Session()
