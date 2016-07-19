@@ -24,13 +24,12 @@ class Order(Base):
 
 
 def mark_random_orders_accepted(orders):
-    if orders < 100:
-        q =  session.query(Order).filter(Order.state == 0).limit(orders):
-    else:
-        q = session.query(Order).filter(Order.state == 0).limit(orders).yield_per(100)
-    for order in q:
-            order.state = 1
+    count = 0
+    for order in orders:
+        order.state = 1
+        count+=1
     session.commit()
+    return count
 
 
 db_engine = create_engine('mysql+mysqldb://root:pass@localhost/DB', echo=False)
@@ -41,4 +40,8 @@ session = Session()
 count = session.query(Order).count()
 rnd = random.randrange(0,count)
 
-mark_random_orders_accepted(rnd)
+c = 0
+while c < rnd:
+    q = session.query(Order).filter(Order.state==0, Order.id>c, Order.id<=rnd).limit(100)
+    c += mark_random_orders_accepted(q)
+    print c
