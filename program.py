@@ -44,4 +44,4 @@ c = 0
 while c < rnd:
     q = session.query(Order).filter(Order.state==0, Order.id>c, Order.id<=rnd).limit(100)
     c += mark_random_orders_accepted(q)
-    print c
+    
