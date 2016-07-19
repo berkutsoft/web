@@ -24,22 +24,13 @@ class Order(Base):
 
 
 def mark_random_orders_accepted(orders):
-
     if orders < 100:
-        for order in session.query(Order).limit(orders):
-            order.state=1
-        session.commit()
-
+        q =  session.query(Order).filter(Order.state == 0).limit(orders):
     else:
-        for i, order in enumerate(session.query(Order).yield_per(100)):
-            if i >= orders:
-                break
-            if not i % 50000:
-                session.commit()
-            if order.state == 1:
-                continue
+        q = session.query(Order).filter(Order.state == 0).limit(orders).yield_per(100)
+    for order in q:
             order.state = 1
-        session.commit()
+    session.commit()
 
 
 db_engine = create_engine('mysql+mysqldb://root:pass@localhost/DB', echo=False)
